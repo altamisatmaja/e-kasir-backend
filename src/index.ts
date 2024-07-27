@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-
 import dotenv from "dotenv";
+import router from './routes/Routes';
 
 dotenv.config();
 
@@ -11,6 +11,8 @@ app.get("/", (req: Request, res: Response) => {
         response: process.env.API_NAME
     });
 });
+
+app.use(router);
 
 app.listen(process.env.API_PORT, () => {
     console.log(`API running on port: ${process.env.API_PORT}`);
