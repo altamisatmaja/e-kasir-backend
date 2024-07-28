@@ -10,8 +10,8 @@ if (!secret) {
 }
 
 export interface CustomJwtPayload extends JwtPayload {
-    id: string;
-    roleId: string;
+    id: number;
+    role: string;
 }
 
 export const verifyToken = (token: string): CustomJwtPayload | null => {
@@ -21,3 +21,11 @@ export const verifyToken = (token: string): CustomJwtPayload | null => {
         return null;
     }
 };
+
+
+export const generateToken = (id: number): string => {
+    const payload = {
+        id,
+    };
+    return jwt.sign(payload, secret);
+}

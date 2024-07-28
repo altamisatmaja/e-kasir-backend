@@ -2,26 +2,26 @@ import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
 
 interface UserAttributes {
-  id?: number,
+  id: number,
   username: string,
   email: string,
   password: string,
   role: 'Admin' | 'Pemilik Usaha' | 'Pegawai',
-  createdAt?: Date,
-  updatedAt?: Date,
+  created_at?: Date,
+  updated_at?: Date,
 }
 
 export interface UserInput extends Optional<UserAttributes, 'id'> { }
 export interface UserOutput extends Required<UserAttributes> { }
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
-  public id?: number;
+  public id!: number;
   public username!: string;
   public email!: string;
   public password!: string;
   public role!: 'Admin' | 'Pemilik Usaha' | 'Pegawai';
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  public readonly created_at!: Date;
+  public readonly updated_at!: Date;
 }
 
 User.init({
@@ -47,12 +47,22 @@ User.init({
     allowNull: false,
     type: DataTypes.ENUM('Admin', 'Pemilik Usaha', 'Pegawai'),
   },
+  created_at: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updated_at: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 }, {
   modelName: 'users',
   tableName: 'users',
   timestamps: true,
   sequelize: sequelizeConnection,
-  underscored: false,
+  underscored: true,
 });
 
 export default User;

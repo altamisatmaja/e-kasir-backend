@@ -1,17 +1,16 @@
 import bcrypt from 'bcrypt';
 
-const passwordHelper = async (password: string, password_confirmation: string, status: string | null, code: number | null, message: string | null) => {
-    if(password !== password_confirmation){
-        return({
-            status: status,
-            code: code,
-            message: message,
-        });
-    }
-
+const hashPassword = async (
+    password: string
+) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     return hashedPassword;
 }
 
-export default { passwordHelper };
+const comparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
+    const isMatch = await bcrypt.compare(password, hashedPassword);
+    return isMatch;
+}
+
+export default { hashPassword, comparePassword };

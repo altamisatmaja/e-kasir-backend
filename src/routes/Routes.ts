@@ -1,12 +1,15 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { authenticate, authorizeRoles } from '../middleware/middleware';
+import AuthRoute from './auth';
 
 const router = express.Router();
 
-// router.get("/role", RoleController.GetRole);
-// router.post("/role", RoleController.CreateRole);
-// router.patch("/role/:id", RoleController.UpdateRole);
-// router.delete("/role/:id", RoleController.DeleteRole);
+router.get('/', ((res: Response) => {
+    return res.json(
+        'eKasir - API V1'
+    );
+}));
 
+router.use(AuthRoute);
 
 export default router;

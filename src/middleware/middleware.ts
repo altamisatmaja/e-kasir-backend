@@ -35,6 +35,6 @@ export const authorizeRoles = (
 
         if(user && allowedRoles.includes(user.roleId)) return next();
 
-        return res.status(403).send(Helper.Helper("failed", 403, "Anda tidak memiliki akses", null));
+        return res.status(403).send(Helper.Response("failed", 403, "Anda tidak memiliki akses", null));
     }
 }

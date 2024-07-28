@@ -1,5 +1,6 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import sequelizeConnection from '../../config/dbConnection';
+import Owner from './Owner';
 
 interface BusinessAttributes {
   id?: number,
@@ -32,6 +33,13 @@ class Business extends Model<BusinessAttributes, BusinessInput> implements Busin
 
   public readonly created_at!: Date;
   public readonly updated_at!: Date;
+
+  public static associate() {
+    Business.belongsTo(Owner, {
+      foreignKey: 'owner_id',
+      as: 'owners',
+    });
+  }
 }
 
 export default Business.init({
@@ -76,7 +84,8 @@ export default Business.init({
     onDelete: "CASCADE",
   },
 }, {
-  modelName: 'businesss',
+  modelName: 'businesses',
+  tableName: 'businesses',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

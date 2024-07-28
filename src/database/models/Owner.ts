@@ -1,5 +1,6 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
+import Business from "./Business";
 
 interface OwnerAttributes {
   id?: number,
@@ -26,6 +27,13 @@ class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttribute
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public static associate(){
+    Owner.hasMany(Business, {
+      foreignKey: 'owner_id',
+      as: 'businesses'
+    })
+  }
 }
 
 export default Owner.init({
