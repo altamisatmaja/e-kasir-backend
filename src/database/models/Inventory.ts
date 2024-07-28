@@ -1,59 +1,59 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
 
-interface OwnerAttributes {
+interface InventoryAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
+  name?: string,
+  total_qty?: number,
+  last_updated?: Date,
 
-  user_id?: number,
+  business_id?: number,
 
   createdAt?: Date,
   updatedAt?: Date,
 }
 
-export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
-export interface OwnerOutput extends Required<OwnerAttributes> { }
+export interface InventoryInput extends Optional<InventoryAttributes, 'id'> { }
+export interface InventoryOutput extends Required<InventoryAttributes> { }
 
-class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
+class Inventory extends Model<InventoryAttributes, InventoryInput> implements InventoryAttributes {
   public id?: number;
-  public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
+  public name!: string;
+  public total_qty!: number;
+  public last_updated!: Date;
 
-  public user_id!: number;
+  public business_id!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default Owner.init({
+export default Inventory.init({
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  date_of_birth: {
+  total_qty: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  last_updated: {
     allowNull: false,
     type: DataTypes.DATE,
   },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
-  },
-  user_id: {
+  business_id: {
     allowNull: false,
     type: DataTypes.BIGINT,
   },
 }, {
-  modelName: 'Owners',
-  tableName: 'owner',
+  modelName: 'inventories',
+  tableName: 'inventories',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

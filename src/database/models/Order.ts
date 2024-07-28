@@ -1,59 +1,84 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
 
-interface OwnerAttributes {
+interface OrderAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
+  customer_name?: string,
+  total_amount?: number,
+  cash_received?: number,
+  change_due?: number,
+  sale_date?: Date,
 
-  user_id?: number,
+  employee_id?: number,
+  business_id?: number,
 
   createdAt?: Date,
   updatedAt?: Date,
 }
 
-export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
-export interface OwnerOutput extends Required<OwnerAttributes> { }
+export interface OrderInput extends Optional<OrderAttributes, 'id'> { }
+export interface OrderOutput extends Required<OrderAttributes> { }
 
-class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
+class Order extends Model<OrderAttributes, OrderInput> implements OrderAttributes {
   public id?: number;
-  public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
+  public customer_name!: string;
+  public total_amount!: number;
+  public cash_received!: number;
+  public change_due!: number;
+  public sale_date!: Date;
 
-  public user_id!: number;
+  public employee_id!: number;
+  public business_id!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default Owner.init({
+export default Order.init({
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
+  customer_name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  date_of_birth: {
+  total_amount: {
+    type: DataTypes.INTEGER,
+  },
+  cash_received: {
+    type: DataTypes.INTEGER,
+  },
+  change_due: {
+    type: DataTypes.INTEGER,
+  },
+  sale_date: {
     allowNull: false,
     type: DataTypes.DATE,
   },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
-  },
-  user_id: {
+  employee_id: {
     allowNull: false,
     type: DataTypes.BIGINT,
+    references: {
+      model: "employees",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
+  business_id: {
+    allowNull: false,
+    type: DataTypes.BIGINT,
+    references: {
+      model: "businesses",
+      key: "id",
+    },
+    onDelete: "CASCADE",
   },
 }, {
-  modelName: 'Owners',
-  tableName: 'owner',
+  modelName: 'orders',
+  tableName: 'orders',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

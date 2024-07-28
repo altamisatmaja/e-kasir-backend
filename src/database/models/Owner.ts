@@ -49,11 +49,16 @@ export default Owner.init({
   },
   user_id: {
     allowNull: false,
-    type: DataTypes.BIGINT,
+        references: {
+          model: "users",
+          key: "id"
+        },
+        type: DataTypes.BIGINT,
+        onDelete: "CASCADE",
   },
 }, {
-  modelName: 'Owners',
-  tableName: 'owner',
+  modelName: 'owners',
+  tableName: 'owners',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

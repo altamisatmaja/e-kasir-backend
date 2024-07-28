@@ -48,8 +48,8 @@ User.init({
     type: DataTypes.ENUM('Admin', 'Pemilik Usaha', 'Pegawai'),
   },
 }, {
-  modelName: 'Users',
-  tableName: 'Users',
+  modelName: 'users',
+  tableName: 'users',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

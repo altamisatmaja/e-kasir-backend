@@ -3,11 +3,12 @@ import sequelizeConnection from "../../config/dbConnection";
 
 interface OwnerAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
+  shift_date?: Date,
+  shift_start?: Date,
+  shift_end?: Date,
 
-  user_id?: number,
+  employee_id?: number,
+  business_id?: number,
 
   createdAt?: Date,
   updatedAt?: Date,
@@ -19,10 +20,12 @@ export interface OwnerOutput extends Required<OwnerAttributes> { }
 class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
   public id?: number;
   public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
+  public shift_date!: Date;
+  public shift_start!: Date;
+  public shift_end!: Date;
 
-  public user_id!: number;
+  public employee_id!: number;
+  public business_id!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -35,24 +38,33 @@ export default Owner.init({
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
-    allowNull: false,
-    type: DataTypes.STRING,
+  shift_date: {
+    type: DataTypes.DATE
   },
-  date_of_birth: {
-    allowNull: false,
-    type: DataTypes.DATE,
+  shift_start: {
+    type: DataTypes.TIME
   },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
+  shift_end: {
+    type: DataTypes.TIME
   },
-  user_id: {
+  employee_id: {
     allowNull: false,
+    references: {
+      model: "employees",
+      key: "id",
+    },
+    type: DataTypes.BIGINT,
+  },
+  business_id: {
+    allowNull: false,
+    references: {
+      model: "businesses",
+      key: "id",
+    },
     type: DataTypes.BIGINT,
   },
 }, {
-  modelName: 'Owners',
+  modelName: 'owners',
   tableName: 'owner',
   timestamps: true,
   sequelize: sequelizeConnection,

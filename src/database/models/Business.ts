@@ -65,8 +65,7 @@ export default Business.init({
       model: "business_categories",
       key: "id",
     },
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    onDelete: "CASCADE",
   },
   owner_id: {
     type: DataTypes.INTEGER,
@@ -74,11 +73,10 @@ export default Business.init({
       model: "business_categories",
       key: "id",
     },
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    onDelete: "CASCADE",
   },
 }, {
-  modelName: 'Businesss',
+  modelName: 'businesss',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

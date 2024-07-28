@@ -1,59 +1,68 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
 
-interface OwnerAttributes {
+interface OrderDetailAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
+  qty?: number,
+  total_price?: number,
 
-  user_id?: number,
+  order_id?: number,
+  product_id?: number,
 
   createdAt?: Date,
   updatedAt?: Date,
 }
 
-export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
-export interface OwnerOutput extends Required<OwnerAttributes> { }
+export interface OrderDetailInput extends Optional<OrderDetailAttributes, 'id'> { }
+export interface OrderDetailOutput extends Required<OrderDetailAttributes> { }
 
-class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
+class OrderDetail extends Model<OrderDetailAttributes, OrderDetailInput> implements OrderDetailAttributes {
   public id?: number;
-  public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
+  public qty!: number;
+  public total_price!: number;
 
-  public user_id!: number;
+  public order_id!: number;
+  public product_id!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default Owner.init({
+export default OrderDetail.init({
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
+  qty: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
   },
-  date_of_birth: {
+  total_price: {
     allowNull: false,
-    type: DataTypes.DATE,
+    type: DataTypes.INTEGER,
   },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
-  },
-  user_id: {
+  order_id: {
     allowNull: false,
     type: DataTypes.BIGINT,
+    references: {
+      model: "orders",
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
+  product_id: {
+    type: DataTypes.BIGINT,
+      references: {
+        model: "products",
+        key: "id",
+      },
+      onDelete: "CASCADE",
   },
 }, {
-  modelName: 'Owners',
-  tableName: 'owner',
+  modelName: 'order_details',
+  tableName: 'order_details',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

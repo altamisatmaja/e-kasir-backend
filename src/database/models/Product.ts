@@ -1,59 +1,67 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
 
-interface OwnerAttributes {
+interface ProductAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
+  name?: string,
+  price?: number,
 
-  user_id?: number,
+  category_product_id?: number,
+  business_id?: number,
 
   createdAt?: Date,
   updatedAt?: Date,
 }
 
-export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
-export interface OwnerOutput extends Required<OwnerAttributes> { }
+export interface ProductInput extends Optional<ProductAttributes, 'id'> { }
+export interface ProductOutput extends Required<ProductAttributes> { }
 
-class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
+class Product extends Model<ProductAttributes, ProductInput> implements ProductAttributes {
   public id?: number;
-  public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
+  public name!: string;
+  public price!: number;
 
-  public user_id!: number;
+  public category_product_id!: number;
+  public business_id!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default Owner.init({
+export default Product.init({
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  date_of_birth: {
-    allowNull: false,
-    type: DataTypes.DATE,
+  category_product_id: {
+    type: DataTypes.BIGINT,
+      references: {
+        model: "product_categories",
+        key: "id",
+      },
+      onDelete: "CASCADE",
   },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
-  },
-  user_id: {
+  price: {
     allowNull: false,
     type: DataTypes.BIGINT,
   },
+  business_id: {
+    type: DataTypes.BIGINT,
+      references: {
+        model: "businesses",
+        key: "id",
+      },
+      onDelete: "CASCADE",
+  },
 }, {
-  modelName: 'Owners',
-  tableName: 'owner',
+  modelName: 'products',
+  tableName: 'products',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

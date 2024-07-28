@@ -1,59 +1,39 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
 import sequelizeConnection from "../../config/dbConnection";
 
-interface OwnerAttributes {
+interface BusinessCategoriesAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
-
-  user_id?: number,
+  name?: string,
 
   createdAt?: Date,
   updatedAt?: Date,
 }
 
-export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
-export interface OwnerOutput extends Required<OwnerAttributes> { }
+export interface BusinessCategoriesInput extends Optional<BusinessCategoriesAttributes, 'id'> { }
+export interface BusinessCategoriesOutput extends Required<BusinessCategoriesAttributes> { }
 
-class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
+class BusinessCategories extends Model<BusinessCategoriesAttributes, BusinessCategoriesInput> implements BusinessCategoriesAttributes {
   public id?: number;
-  public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
-
-  public user_id!: number;
+  public name!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default Owner.init({
+export default BusinessCategories.init({
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  date_of_birth: {
-    allowNull: false,
-    type: DataTypes.DATE,
-  },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
-  },
-  user_id: {
-    allowNull: false,
-    type: DataTypes.BIGINT,
-  },
 }, {
-  modelName: 'Owners',
-  tableName: 'owner',
+  modelName: 'business_categories',
+  tableName: 'business_categories',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,

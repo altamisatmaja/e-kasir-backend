@@ -3,11 +3,9 @@ import sequelizeConnection from "../../config/dbConnection";
 
 interface OwnerAttributes {
   id?: number,
-  full_name?: string,
-  date_of_birth?: Date,
-  gender?: 'Laki-laki' | 'Perempuan',
+  name?: string,
 
-  user_id?: number,
+  business_id?: number,
 
   createdAt?: Date,
   updatedAt?: Date,
@@ -18,11 +16,9 @@ export interface OwnerOutput extends Required<OwnerAttributes> { }
 
 class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
   public id?: number;
-  public full_name!: string;
-  public date_of_birth!: Date;
-  public gender!: 'Laki-laki' | 'Perempuan';
+  public name!: string;
 
-  public user_id!: number;
+  public business_id!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -35,21 +31,18 @@ export default Owner.init({
     primaryKey: true,
     type: DataTypes.BIGINT
   },
-  full_name: {
+  name: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  date_of_birth: {
-    allowNull: false,
-    type: DataTypes.DATE,
-  },
-  gender: {
-    allowNull: false,
-    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
-  },
-  user_id: {
+  business_id: {
     allowNull: false,
     type: DataTypes.BIGINT,
+    references: {
+      model: "businesses",
+      key: "id",
+    },
+    onDelete: "CASCADE",
   },
 }, {
   modelName: 'Owners',
