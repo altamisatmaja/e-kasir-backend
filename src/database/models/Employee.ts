@@ -1,30 +1,60 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Employee extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  }
-  Employee.init({
-    full_name: DataTypes.STRING,
-    employee_address_detail: DataTypes.STRING,
-    date_of_birth: DataTypes.DATE,
-    gender: DataTypes.STRING,
-    work_at: DataTypes.DATE,
-    is_active: DataTypes.BOOLEAN,
-    user_id: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Employee',
-    underscored: true,
-  });
-  return Employee;
-};
+import { DataTypes, Sequelize, Model, Optional } from "sequelize";
+import sequelizeConnection from "../../config/dbConnection";
+
+interface OwnerAttributes {
+  id?: number,
+  full_name?: string,
+  date_of_birth?: Date,
+  gender?: 'Laki-laki' | 'Perempuan',
+
+  user_id?: number,
+
+  createdAt?: Date,
+  updatedAt?: Date,
+}
+
+export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
+export interface OwnerOutput extends Required<OwnerAttributes> { }
+
+class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttributes {
+  public id?: number;
+  public full_name!: string;
+  public date_of_birth!: Date;
+  public gender!: 'Laki-laki' | 'Perempuan';
+
+  public user_id!: number;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+export default Owner.init({
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.BIGINT
+  },
+  full_name: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  date_of_birth: {
+    allowNull: false,
+    type: DataTypes.DATE,
+  },
+  gender: {
+    allowNull: false,
+    type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
+  },
+  user_id: {
+    allowNull: false,
+    type: DataTypes.BIGINT,
+  },
+}, {
+  modelName: 'Owners',
+  tableName: 'owner',
+  timestamps: true,
+  sequelize: sequelizeConnection,
+  underscored: false,
+});
