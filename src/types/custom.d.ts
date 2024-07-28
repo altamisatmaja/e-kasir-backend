@@ -1,11 +1,11 @@
-import { JwtPayload } from 'jsonwebtoken';
-import { UserInstance } from '../database/models/User';
-import { Request } from 'express';
+// import { JwtPayload } from 'jsonwebtoken';
+// import { User } from '../database/models/User';
+// import { Request } from 'express';
 
-declare global {
-    namespace Express {
-        interface Request {
-            user?: UserInstance
-        }
-    }
-}
+// declare global {
+//     namespace Express {
+//         interface Request {
+//             user?: User
+//         }
+//     }
+// }

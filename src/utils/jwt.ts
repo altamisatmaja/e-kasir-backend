@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const secret = process.env.JWT_TOKEN;
+const secret = process.env.JWT_TOKEN || "a03c71a6668fa9c8a3e44a00986cab1ae1c5c41441a26fec7dbf796a5ba3167b";
 
 if (!secret) {
     throw new Error('JWT_TOKEN environment tidak terdefiniskan');
@@ -21,7 +21,6 @@ export const verifyToken = (token: string): CustomJwtPayload | null => {
         return null;
     }
 };
-
 
 export const generateToken = (id: number): string => {
     const payload = {

@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { authenticate, authorizeRoles } from '../middleware/middleware';
-import AuthRoute from './auth';
+import { AuthRoute, MiddlewareRoute } from './auth';
 
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router.get('/', ((res: Response) => {
 }));
 
 router.use(AuthRoute);
+router.use(MiddlewareRoute);
 
 export default router;
