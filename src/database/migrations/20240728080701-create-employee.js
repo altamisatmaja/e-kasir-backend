@@ -2,60 +2,61 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Employees', {
+    await queryInterface.createTable('employees', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       full_name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       employee_address_detail: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       date_of_birth: {
         type: Sequelize.DATE
       },
       gender: {
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('Laki-laki', 'Perempuan')
       },
       work_at: {
         type: Sequelize.DATE
       },
       is_active: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       user_id: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
+        type: Sequelize.BIGINT,
           references: {
-            model: "Users",
+            model: "users",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
       },
       business_id: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
+        type: Sequelize.BIGINT,
           references: {
-            model: "Businesses",
+            model: "businesses",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
       },
       created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       },
       updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Employees');
+    await queryInterface.dropTable('employees');
   }
 };

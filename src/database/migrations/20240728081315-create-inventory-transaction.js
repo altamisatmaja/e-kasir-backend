@@ -2,30 +2,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('InventoryTransactions', {
+    await queryInterface.createTable('inventory_transactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       transacion_date: {
         type: Sequelize.DATE
       },
-      transacion_tpye: {
-        type: Sequelize.STRING
+      transacion_type: {
+        type: Sequelize.ENUM('Penambahan', 'Pengurangan')
       },
       qty: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       inventory_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
           references: {
-            model: "Inventorys",
+            model: "inventories",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
       },
       created_at: {
         allowNull: false,
@@ -38,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('InventoryTransactions');
+    await queryInterface.dropTable('inventory_transactions');
   }
 };

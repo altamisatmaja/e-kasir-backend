@@ -3,63 +3,69 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Businesses",
+      "businesses",
       {
         id: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER,
+          type: Sequelize.BIGINT,
         },
         business_name: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.STRING(50),
         },
         business_picture: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.STRING(144),
         },
         business_province: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.STRING(50),
         },
         business_city: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.STRING(50),
         },
         business_sub_district: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.STRING(50),
         },
         business_address_detail: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: Sequelize.STRING(50),
         },
         business_category_id: {
-          type: Sequelize.INTEGER,
+          allowNull: false,
+          type: Sequelize.BIGINT,
           references: {
-            model: "BusinessCategories",
+            model: "business_categories",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
         },
         owner_id: {
-          type: Sequelize.INTEGER,
+          allowNull: false,
+          type: Sequelize.BIGINT,
           references: {
-            model: "Owner",
+            model: "owners",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
         },
         created_at: {
-          allowNull: false,
-          type: Sequelize.NOW,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.NOW
         },
         updated_at: {
-          allowNull: false,
-          type: Sequelize.NOW,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.NOW
         },
       },
       {}
     );
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Businesses");
+    await queryInterface.dropTable("businesses");
   },
 };

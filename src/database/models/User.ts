@@ -3,12 +3,10 @@ import sequelizeConnection from "../../config/dbConnection";
 
 interface UserAttributes {
   id?: number,
-  username?: string,
-  email?: string,
-  password?: string,
-
-  role?: string[],
-
+  username: string,
+  email: string,
+  password: string,
+  role: 'Admin' | 'Pemilik Usaha' | 'Pegawai',
   createdAt?: Date,
   updatedAt?: Date,
 }
@@ -21,14 +19,12 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   public username!: string;
   public email!: string;
   public password!: string;
-
-  public readonly role!: string[];
-
+  public role!: 'Admin' | 'Pemilik Usaha' | 'Pegawai';
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-export default User.init({
+User.init({
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -36,24 +32,27 @@ export default User.init({
     type: DataTypes.BIGINT
   },
   username: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING,
   },
   email: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING,
   },
   password: {
-    allowNull: true,
+    allowNull: false,
     type: DataTypes.STRING,
   },
   role: {
     allowNull: false,
-    type: DataTypes.ENUM,
+    type: DataTypes.ENUM('Admin', 'Pemilik Usaha', 'Pegawai'),
   },
 }, {
   modelName: 'Users',
+  tableName: 'Users',
   timestamps: true,
   sequelize: sequelizeConnection,
   underscored: false,
 });
+
+export default User;

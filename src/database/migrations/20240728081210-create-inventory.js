@@ -2,15 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Inventories', {
+    await queryInterface.createTable('inventories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       total_qty: {
         type: Sequelize.INTEGER
@@ -19,13 +19,12 @@ module.exports = {
         type: Sequelize.DATE
       },
       business_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
           references: {
-            model: "Businesses",
+            model: "businesses",
             key: "id",
           },
           onUpdate: "CASCADE",
-          onDelete: "SET NULL",
       },
       created_at: {
         allowNull: false,
@@ -38,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Inventories');
+    await queryInterface.dropTable('inventories');
   }
 };

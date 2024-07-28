@@ -6,7 +6,7 @@ interface Response<T> {
     errors?: Error;
 }
 
-const Helper = <T>(
+const Response = <T>(
     status: string, 
     code: number, 
     message: string, 
@@ -18,4 +18,4 @@ const Helper = <T>(
     return { status, code, message, data: data ?? undefined };
 }
 
-export default { Helper };
+export default { Response };

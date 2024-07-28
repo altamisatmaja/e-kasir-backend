@@ -2,12 +2,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('EmployeeShifts', {
+    await queryInterface.createTable('employee_shifts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       shift_date: {
         type: Sequelize.DATE
@@ -19,22 +19,20 @@ module.exports = {
         type: Sequelize.TIME
       },
       employee_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
           references: {
-            model: "Employees",
+            model: "employees",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
       },
       business_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
           references: {
-            model: "Businesses",
+            model: "businesses",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
       },
       created_at: {
         allowNull: false,
@@ -47,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('EmployeeShifts');
+    await queryInterface.dropTable('employee_shifts');
   }
 };
