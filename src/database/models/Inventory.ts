@@ -55,6 +55,8 @@ export default Inventory.init({
   modelName: 'inventories',
   tableName: 'inventories',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: false,
 });

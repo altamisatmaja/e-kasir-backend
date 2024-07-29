@@ -29,6 +29,8 @@ export default BusinessCategories.init({
   modelName: 'business_categories',
   tableName: 'business_categories',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: true,
 });

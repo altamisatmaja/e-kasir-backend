@@ -67,6 +67,8 @@ export default Owner.init({
   modelName: 'owners',
   tableName: 'owner',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: false,
 });

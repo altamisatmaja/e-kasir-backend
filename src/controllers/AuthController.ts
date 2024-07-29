@@ -3,6 +3,7 @@ import User from '../database/models/User';
 import Helper from '../helpers/Helper';
 import PasswordHelper from '../helpers/PasswordHelper';
 import { generateToken, verifyToken } from '../utils/jwt';
+import Owner from '../database/models/Owner';
 
 const Register = async (
     req: Request,
@@ -20,6 +21,10 @@ const Register = async (
         const user = await User.create({ email, username, password: hashedPassword, role });
         const token = generateToken(user.id, user.email, user.username, user.role);
 
+        const owner = await Owner.create({
+            user_id: user.id
+        });
+
         const data = {
             id: user.id,
             email: user.email,
@@ -27,7 +32,19 @@ const Register = async (
             role: user.role,
         };
 
-        return res.status(201).json(Helper.ResponseWithToken('success', 201, 'User registered successfully', data, token));
+        if (user.role == 'Pemilik Usaha') {
+            const data = {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                role: user.role,
+                detail: owner
+            }
+
+            return res.status(200).json(Helper.ResponseWithToken('success', 201, 'User registered successfully', data, token));
+        }
+
+        return res.status(200).json(Helper.ResponseWithToken('success', 201, 'User registered successfully', data, token));
     } catch (error: any) {
         return res.status(500).json(Helper.Response('failed', 500, 'Oops, registration failed', null, error));
     }

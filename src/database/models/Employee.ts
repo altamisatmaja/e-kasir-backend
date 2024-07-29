@@ -87,6 +87,8 @@ export default Employee.init({
   modelName: 'employees',
   tableName: 'employees',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: false,
 });

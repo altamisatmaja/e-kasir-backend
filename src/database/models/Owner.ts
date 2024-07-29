@@ -10,8 +10,6 @@ interface OwnerAttributes {
 
   user_id?: number,
 
-  createdAt?: Date,
-  updatedAt?: Date,
 }
 
 export interface OwnerInput extends Optional<OwnerAttributes, 'id'> { }
@@ -24,9 +22,6 @@ class Owner extends Model<OwnerAttributes, OwnerInput> implements OwnerAttribute
   public gender!: 'Laki-laki' | 'Perempuan';
 
   public user_id!: number;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 
   public static associate(){
     Owner.hasMany(Business, {
@@ -44,15 +39,15 @@ export default Owner.init({
     type: DataTypes.BIGINT
   },
   full_name: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING,
   },
   date_of_birth: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DATE,
   },
   gender: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.ENUM('Laki-laki', 'Perempuan'),
   },
   user_id: {
@@ -68,6 +63,8 @@ export default Owner.init({
   modelName: 'owners',
   tableName: 'owners',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
-  underscored: false,
+  underscored: true,
 });

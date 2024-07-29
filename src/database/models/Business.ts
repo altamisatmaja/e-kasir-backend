@@ -87,6 +87,8 @@ export default Business.init({
   modelName: 'businesses',
   tableName: 'businesses',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: true,
 });

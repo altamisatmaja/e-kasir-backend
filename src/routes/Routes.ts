@@ -1,7 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { authenticate, authorizeRoles } from '../middleware/middleware';
-import { AuthRoute, MiddlewareRoute } from './auth';
+import { AuthRoute } from './auth';
 import { AdminRoute } from './admin';
+import { OwnerRoute } from './owner';
+import { EmployeeRoute } from './employee';
+import { MiddlewareRoute } from './middleware';
 
 const router = express.Router();
 
@@ -12,7 +15,16 @@ router.get('/', ((res: Response) => {
 }));
 
 router.use(AuthRoute);
+
+router.use(authenticate);
+router.use('/admin', authorizeRoles('Admin'), AdminRoute);
+router.use('/owner', authorizeRoles('Pemilik Usaha'), OwnerRoute);
+router.use('/employee', authorizeRoles('Pegawai'), EmployeeRoute);
+
+// router.use(AuthRoute);
+// router.use(MiddlewareRoute);
+// router.use(AdminRoute);
+
 router.use(MiddlewareRoute);
-router.use(AdminRoute);
 
 export default router;

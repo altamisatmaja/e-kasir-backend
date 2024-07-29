@@ -63,6 +63,8 @@ export default Product.init({
   modelName: 'products',
   tableName: 'products',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: false,
 });

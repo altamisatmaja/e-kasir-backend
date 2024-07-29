@@ -64,6 +64,8 @@ export default OrderDetail.init({
   modelName: 'order_details',
   tableName: 'order_details',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: false,
 });

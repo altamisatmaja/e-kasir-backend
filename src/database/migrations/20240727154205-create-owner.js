@@ -11,15 +11,15 @@ module.exports = {
         type: Sequelize.BIGINT,
       },
       full_name: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING(50),
       },
       date_of_birth: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE,
       },
       gender: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.ENUM("Laki-laki", "Perempuan"),
       },
       user_id: {

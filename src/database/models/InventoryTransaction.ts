@@ -60,6 +60,8 @@ export default InventoryTransaction.init({
   modelName: 'inventory_transactions',
   tableName: 'inventory_transaction',
   timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
   sequelize: sequelizeConnection,
   underscored: false,
 });
