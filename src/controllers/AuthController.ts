@@ -4,6 +4,7 @@ import Helper from '../helpers/Helper';
 import PasswordHelper from '../helpers/PasswordHelper';
 import { generateToken, verifyToken } from '../utils/jwt';
 import Owner from '../database/models/Owner';
+import Business from '../database/models/Business';
 
 const Register = async (
     req: Request,
@@ -20,26 +21,30 @@ const Register = async (
 
         const user = await User.create({ email, username, password: hashedPassword, role });
         const token = generateToken(user.id, user.email, user.username, user.role);
-
-        const owner = await Owner.create({
-            user_id: user.id
-        });
-
+        
         const data = {
             id: user.id,
             email: user.email,
             username: user.username,
             role: user.role,
         };
-
+        
         if (user.role == 'Pemilik Usaha') {
-            const data = {
-                id: user.id,
-                email: user.email,
-                username: user.username,
-                role: user.role,
-                detail: owner
-            }
+            const owner = await Owner.create({
+                user_id: user.id
+            });
+
+            // const data = {
+            //     id: user.id,
+            //     email: user.email,
+            //     username: user.username,
+            //     role: user.role,
+            //     detail: owner
+            // }
+
+            await Business.create({
+                owner_id: owner.id
+            });
 
             return res.status(200).json(Helper.ResponseWithToken('success', 201, 'User registered successfully', data, token));
         }
