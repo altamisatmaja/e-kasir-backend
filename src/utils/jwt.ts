@@ -22,9 +22,12 @@ export const verifyToken = (token: string): CustomJwtPayload | null => {
     }
 };
 
-export const generateToken = (id: number): string => {
+export const generateToken = (id: number, email: string, username: string, role: string): string => {
     const payload = {
         id,
+        email,
+        username,
+        role,
     };
     return jwt.sign(payload, secret);
 }

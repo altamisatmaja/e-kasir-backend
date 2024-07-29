@@ -4,9 +4,6 @@ import sequelizeConnection from "../../config/dbConnection";
 interface BusinessCategoriesAttributes {
   id?: number,
   name?: string,
-
-  createdAt?: Date,
-  updatedAt?: Date,
 }
 
 export interface BusinessCategoriesInput extends Optional<BusinessCategoriesAttributes, 'id'> { }
@@ -15,9 +12,6 @@ export interface BusinessCategoriesOutput extends Required<BusinessCategoriesAtt
 class BusinessCategories extends Model<BusinessCategoriesAttributes, BusinessCategoriesInput> implements BusinessCategoriesAttributes {
   public id?: number;
   public name!: string;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 
 export default BusinessCategories.init({
@@ -36,5 +30,5 @@ export default BusinessCategories.init({
   tableName: 'business_categories',
   timestamps: true,
   sequelize: sequelizeConnection,
-  underscored: false,
+  underscored: true,
 });

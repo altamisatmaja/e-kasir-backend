@@ -10,7 +10,6 @@ export const authenticate = async (
 ) => {
     const authHeader = req.headers.authorization;
 
-    console.log(authHeader);
     if (!authHeader) {
         return res.status(401).send(Helper.Response("failed", 401, "Authorization header missing", null));
     }

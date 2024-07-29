@@ -18,7 +18,7 @@ const Register = async (
         const hashedPassword = await PasswordHelper.hashPassword(password);
 
         const user = await User.create({ email, username, password: hashedPassword, role });
-        const token = generateToken(user.id);
+        const token = generateToken(user.id, user.email, user.username, user.role);
 
         const data = {
             id: user.id,
@@ -50,7 +50,7 @@ const Login = async (
 
         if (!isPasswordValid) return res.status(401).json(Helper.Response('failed', 401, 'Invalid credentials', null));
 
-        const token = generateToken(user.id);
+        const token = generateToken(user.id, user.email, user.username, user.role);
 
         const data = {
             id: user.id,
@@ -77,7 +77,6 @@ const Logged = async (
 
         const token = header.split(' ')[1];
         const decoded = verifyToken(token);
-        console.log(decoded);
 
         if (!decoded) {
             return res.status(401).json(Helper.Response('failed', 401, 'Token tidak valid', null));

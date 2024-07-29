@@ -88,5 +88,5 @@ export default Business.init({
   tableName: 'businesses',
   timestamps: true,
   sequelize: sequelizeConnection,
-  underscored: false,
+  underscored: true,
 });
